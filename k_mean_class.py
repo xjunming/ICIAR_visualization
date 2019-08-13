@@ -9,7 +9,7 @@ def read_file(file_dir):
     file_list = []
     for root, dirs, files in os.walk(file_dir) :
         for file in files:
-            if 'jpg' in file:
+            if 'tif' in file:
                 # print(root + file)  # 当前目录路径
                 # print(file)  # 当前路径下所有非目录子文件
                 file_list.append(str(root + '//' +  file))
