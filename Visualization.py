@@ -17,6 +17,7 @@ if __name__=='__main__':
     file_dir = '/cptjack/totem/Colon Pathology/openslide_test/ICIAR2018_BACH_Challeng/Train/Photos/'
     # file_dir = 'E://biototem//颜色提取及可视化'
     file_list = read_file(file_dir)
+    print(file_list)
     color_x, color_y, color_z = [],[],[]
     for img_file in file_list:
         image = Image.open(img_file)
@@ -25,5 +26,3 @@ if __name__=='__main__':
         color_y.append(dominant_color[1])
         color_z.append(dominant_color[2])
     plot_dominant_color([color_x,color_y,color_z])
-    plot_dominant_color([color_x,color_y,color_z], elev=0, azim=0)
-    plot_dominant_color([color_x,color_y,color_z], elev=90, azim=90)
