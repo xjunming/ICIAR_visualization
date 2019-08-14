@@ -13,7 +13,7 @@ def count_red(filename):
     mask = cv2.inRange(hsv, lower_red, upper_red) + cv2.inRange(hsv,lower_red1,upper_red1)
     
     # print(mask.shape[0]*mask.shape[1])
-    return 1.5*np.sum(mask)
+    return 2*np.sum(mask)
 
 def count_grey(filename):
     img = cv2.imread(filename)
@@ -45,7 +45,7 @@ def count_blue(filename):
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
     mask = cv2.inRange(hsv, lower_blue, upper_blue)
     # print(mask.shape[0]*mask.shape[1])
-    return np.sum(mask)
+    return 2*np.sum(mask)
 
 
 def count_color(filename):
