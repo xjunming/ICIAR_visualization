@@ -6,11 +6,14 @@ def count_red(filename):
     # set red thresh
     lower_red=np.array([156,43,46])
     upper_red=np.array([180,255,255])
+    lower_red1 = np.array([0,43,46])
+    upper_red1 = np.array([10,255,255])
     frame = img
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
-    mask = cv2.inRange(hsv, lower_red, upper_red)
+    mask = cv2.inRange(hsv, lower_red, upper_red) + cv2.inRange(hsv,lower_red1,upper_red1)
+    
     # print(mask.shape[0]*mask.shape[1])
-    return np.sum(mask)/(mask.shape[0]*mask.shape[1])
+    return 1.5*np.sum(mask)
 
 def count_grey(filename):
     img = cv2.imread(filename)
@@ -21,7 +24,7 @@ def count_grey(filename):
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
     mask = cv2.inRange(hsv, lower_grey, upper_grey)
     # print(mask.shape[0]*mask.shape[1])
-    return np.sum(mask)/(mask.shape[0]*mask.shape[1])
+    return np.sum(mask)
 
 def count_purple(filename):
     img = cv2.imread(filename)
@@ -32,17 +35,17 @@ def count_purple(filename):
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
     mask = cv2.inRange(hsv, lower_purple, upper_purple)
     # print(mask.shape[0]*mask.shape[1])
-    return np.sum(mask)/(mask.shape[0]*mask.shape[1])
+    return 2*np.sum(mask)
 
 def count_blue(filename):
     img = cv2.imread(filename)
-    lower_blue=np.array([100,43,46])
+    lower_blue=np.array([78,43,46])
     upper_blue=np.array([124,255,255])
     frame = img
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
     mask = cv2.inRange(hsv, lower_blue, upper_blue)
     # print(mask.shape[0]*mask.shape[1])
-    return np.sum(mask)/(mask.shape[0]*mask.shape[1])
+    return np.sum(mask)
 
 
 def count_color(filename):
