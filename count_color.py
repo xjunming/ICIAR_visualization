@@ -34,23 +34,36 @@ def count_purple(filename):
     # print(mask.shape[0]*mask.shape[1])
     return np.sum(mask)/(mask.shape[0]*mask.shape[1])
 
+def count_blue(filename):
+    img = cv2.imread(filename)
+    lower_blue=np.array([100,43,46])
+    upper_blue=np.array([124,255,255])
+    frame = img
+    hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+    mask = cv2.inRange(hsv, lower_blue, upper_blue)
+    # print(mask.shape[0]*mask.shape[1])
+    return np.sum(mask)/(mask.shape[0]*mask.shape[1])
+
 
 def count_color(filename):
     return np.array(
         [count_red(filename),
         count_grey(filename),
-        count_purple(filename)]
+        count_purple(filename),
+         count_blue(filename)]
     )
 
 
 if __name__=='__main__':
-    files = [
-        '"E://biototem//main_color//train//s//b096.tif"','train/s/b099.tif',
-        'train/t/b066.tif','train/t/b095.tif']
+    files = ['E://biototem//main_color\\train\\s//b096.tif', 'E://biototem//main_color\\train\\s//b099.tif', 'E://biototem//main_color\\train\\t//b066.tif', 'E://biototem//main_color\\train\\t//b095.tif']
     arr = count_color(files[0])
     for img_file in files[1:]:
         c = count_color(img_file)
         arr = np.vstack((arr,c))
+
+
+    print(arr)
+    print(c)
 
 
 
