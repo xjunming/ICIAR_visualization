@@ -5,12 +5,9 @@ from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
 
 def get_dominant_color(img_file):
-    # 读取图片
     image = Image.open(img_file)
-    # 颜色模式转换，以便输出rgb颜色值
     image = image.convert('RGBA')
 
-    # 生成缩略图，减少计算量，减小cpu压力
     image.thumbnail((200, 200))
 
     max_score = 0 # 原来的代码此处为None
@@ -38,14 +35,14 @@ def get_dominant_color(img_file):
         gs.append(g)
         bs.append(b)
 
-        if score > max_score:
-            # print(saturation, count)
-            max_score = score
-            dominant_color = (r, g, b)
+        # if score > max_score:
+        #     # print(saturation, count)
+        #     max_score = score
+        #     dominant_color = (r, g, b)
 
     scores,rs,gs,bs = np.array(scores),np.array(rs),np.array(gs),np.array(bs)
     # scores = (scores-np.min(scores))/(np.max(scores)-np.min(scores))
-    print(np.multiply(scores,rs))
+    # print(np.multiply(scores,rs))
     dominant_color = (np.mean(np.multiply(scores,rs)),np.mean(np.multiply(scores,gs)),np.mean(np.multiply(scores,bs)))
     return dominant_color
 
@@ -60,15 +57,19 @@ def plot_dominant_color(arr,elev=45,azim=45):
     plt.show()
 
 if __name__=='__main__':
-    img_file = 'train/t/test.jpg'
-    dominant_color = get_dominant_color(img_file)
-    print(np.array(dominant_color))
-    # plot_dominant_color(np.array(dominant_color))
-    # 画图
-    im = Image.new("RGB", (1, 1))
-    im.putpixel((0, 0), (int(dominant_color[0]), int(dominant_color[1]), int(dominant_color[2])))
-    im1 = Image.open(img_file)
-    plt.imshow(im)
-    plt.imshow(im1)
-    plt.axis('off')
-    plt.show()
+    files = [
+        'train/s/b096.tif','train/s/b099.tif',
+        'train/t/b066.tif','train/t/b095.tif']
+    for img_file in files:
+        # print(img_file)
+        dominant_color = get_dominant_color(img_file)
+        print('dominant_color',np.array(dominant_color))
+        # plot_dominant_color(np.array(dominant_color))
+        im = Image.new("RGB", (1, 1))
+        im.putpixel((0, 0), (int(dominant_color[0]), int(dominant_color[1]), int(dominant_color[2])))
+        im1 = Image.open(img_file)
+        plt.imshow(im)
+        plt.show()
+        plt.imshow(im1)
+        plt.axis('off')
+        plt.show()
