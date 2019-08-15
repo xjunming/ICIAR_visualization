@@ -20,3 +20,7 @@
 `k_means_class.py` 是用上面其中之一的代码作为特征向量，来做k-means聚类；
 
 `visualization.ipynb` 最后，可视化该聚类效果。
+
+## 运行
+* 在终端运行`python k_means_class.py`
+* 然后在jupyter notebook里边运行`visualization.ipynb`
