@@ -79,6 +79,16 @@ def count_color(filename):
          count_white(filename)]
     )
 
+def get_rgb(filename):
+    img = cv2.imread(filename, cv2.IMREAD_COLOR)
+    color = ('b', 'g', 'r')
+    fea = []
+    for i, col in enumerate(color):
+        histr = cv2.calcHist([img], [i], None, [256], [0, 256])
+        fea.extend([np.max(histr)/500,np.argmax(histr)])
+    return np.array(fea)
+
+
 
 if __name__ == '__main__':
     files = ['E://biototem//main_color\\train\\s//b096.tif', 'E://biototem//main_color\\train\\s//b099.tif',
