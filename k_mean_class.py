@@ -16,6 +16,9 @@ def read_file(file_dir):
                 file_list.append(str(root + '//' +  file))
     return file_list
 
+def normalize(x):
+    return (x-np.min(x,axis=0))/(np.max(x,axis=0) - np.min(x,axis=0))
+
 if __name__=='__main__':
     # file_dir = '/cptjack/totem/Colon Pathology/openslide_test/ICIAR2018_BACH_Challenge/Train/Photos/'
     file_dir = 'E://biototem//main_color'
@@ -45,6 +48,7 @@ if __name__=='__main__':
     for img_file in file_list[1:]:
         c = count_color(img_file)
         main_color_array = np.vstack((main_color_array,c))
+    main_color_array = normalize(main_color_array)
 
     n_clusters = 4
     estimator = KMeans(n_clusters=n_clusters)
