@@ -115,18 +115,21 @@ def hsv2rgb(h, s, v):
     r, g, b = int(r * 255), int(g * 255), int(b * 255)
     return r, g, b
 
-def calculate_means_std(img,zoom_in_size = 4):
-    img = cv2.resize(img, None, fx=1/zoom_in_size, fy=1/zoom_in_size, interpolation=cv2.INTER_CUBIC)
+def calculate_means_std(img):
+    
     h,s,v = [],[],[]
     for raw in range(img.shape[0]):
         for col in range(img.shape[1]):
-            if ((img[raw,col,0]>0) and (img[raw,col,0])<180) and \
-                    (img[raw,col,1]>0) and (img[raw,col,1]<30) and \
-                    (img[raw,col,2]>221) and (img[raw,col,2]<255):
+            r,g,b = hsv2rgb(img[raw,col,0], img[raw,col,1], img[raw,col,2])
+            if r > 200 and g > 200 and b > 200:  # white
                 continue
-            elif hsv2rgb(img[raw,col,0], img[raw,col,1], img[raw,col,2])[0] > 221:
-                # print('too red')
+                # pass
+            elif  r > 210 and r < 230\
+                    and g > 75 and g <95\
+                    and b > 200 and b < 220:
+                print('too red')
                 continue
+                # pass
             else:
                 h.append(img[raw,col,0])
                 s.append(img[raw,col,1])
@@ -146,13 +149,14 @@ def calculate_means_std(img,zoom_in_size = 4):
     return np.array([h_means, s_means, v_means,
                      h_std, s_std, v_std])
 
-def mean_std_hsv(filename):
+def mean_std_hsv(filename,zoom_in_size = 4):
     img = cv2.imread(filename)
+    img = cv2.resize(img, None, fx=1/zoom_in_size, fy=1/zoom_in_size, interpolation=cv2.INTER_CUBIC)
     # vec = calculate_means_std(img)
     # print(vec)
-    # hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+    hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
     # print(np.mean(hsv[:,:,0]))
-    return calculate_means_std(img)
+    return calculate_means_std(hsv)
 
 
 if __name__ == '__main__':
